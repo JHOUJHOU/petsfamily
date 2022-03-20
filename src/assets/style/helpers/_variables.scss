@@ -67,26 +67,27 @@ $colors: (
 // scss-docs-end colors-map
 
 // scss-docs-start theme-color-variables
-$primary:       #E59A59; // $blue !default;
+$primary:       $blue !default;
 $secondary:     $gray-600 !default;
 $success:       $green !default;
 $info:          $cyan !default;
 $warning:       $yellow !default;
 $danger:        $red !default;
 $light:         $gray-100 !default;
-$dark:          $gray-900 !default;
+$dark:          $black; // $gray-900 !default;
 // scss-docs-end theme-color-variables
 
 // scss-docs-start theme-colors-map
 $theme-colors: (
-  "primary":    $primary,
-  "secondary":  $secondary,
-  "success":    $success,
-  "info":       $info,
+  "primary":    #E59A59, // $primary,
+  "secondary":  #712E1E, // $secondary,
+  "success":    #888870, // $success,
+  "info":       #FFD5AF, // $info,
   "warning":    $warning,
   "danger":     $danger,
   "light":      $light,
-  "dark":       $dark
+  "dark":       $dark,
+  "white":      $white
 ) !default;
 // scss-docs-end theme-colors-map
 
@@ -375,15 +376,16 @@ $gradient: linear-gradient(180deg, rgba($white, .15), rgba($white, 0)) !default;
 $spacer: 1rem !default;
 $spacers: (
   0: 0,
-  1: $spacer * .25,  //4px
-  2: $spacer * .5,   //8px
-  3: $spacer,        //16px
-  4: $spacer * 1.25, //20px //* 1.5,
-  5: $spacer * 1.5,  //24px //* 3,
-  6: $spacer * 2,    //32px
-  7: $spacer * 2.25,  //36px
-  8: $spacer * 2.5,   //40px
-  9: $spacer * 3,     //48px
+  1: $spacer * .25,    //4px
+  2: $spacer * .5,     //8px
+  3: $spacer,          //16px
+  4: $spacer * 1.25,   //20px //* 1.5,
+  5: $spacer * 1.5,    //24px //* 3,
+  6: $spacer * 2,      //32px
+  7: $spacer * 2.25,    //36px
+  8: $spacer * 2.5,     //40px
+  9: $spacer * 3,       //48px
+  10: $spacer * 4.5,    //72px
 ) !default;
 
 $negative-spacers: if($enable-negative-margins, negativify-map($spacers), null) !default;
@@ -396,7 +398,13 @@ $negative-spacers: if($enable-negative-margins, negativify-map($spacers), null) 
 // scss-docs-start position-map
 $position-values: (
   0: 0,
+  10: 10%,
+  20: 20%,
+  30: 30%,
   50: 50%,
+  60: 60%,
+  70: 70%,
+  80: 80%,
   100: 100%
 ) !default;
 // scss-docs-end position-map

@@ -1,0 +1,8 @@
+<template>
+  <router-view/>
+</template>
+
+<style lang="scss">
+@import '@/assets/style/all.scss';
+@import 'bootstrap/scss/bootstrap';
+</style>
