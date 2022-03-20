@@ -85,7 +85,12 @@
       :space-between="50"
     >
     <swiper-slide v-for="item in products" :key="item.id">
-      <img :src="item.imageUrl" alt="">
+      <div
+      style="height: 500px; background-positiion: center center; background-size: cover;"
+        :style="{
+          backgroundImage: `url(${item.imageUrl})`
+        }">
+      </div>
     </swiper-slide>
   </swiper>
   </div>
