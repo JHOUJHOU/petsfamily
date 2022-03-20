@@ -84,7 +84,7 @@
       :slides-per-view="3"
       :space-between="50"
     >
-    <swiper-slide v-for="item in products" :key=item.id>
+    <swiper-slide v-for="item in products" :key="item.id">
       <img :src="item.imageUrl" alt="">
     </swiper-slide>
   </swiper>
@@ -153,8 +153,6 @@
 </template>
 
 <script>
-import Products from '@/components/ProductsView.vue';
-
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from 'swiper/vue';
 
@@ -165,8 +163,22 @@ export default {
   components: {
     Swiper,
     SwiperSlide,
-    // eslint-disable-next-line vue/no-unused-components
-    Products,
+  },
+  data() {
+    return {
+      products: [],
+    };
+  },
+  mounted() {
+    // 取得遠端資源
+    this.$http.get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products`)
+      .then((res) => {
+        console.log(res);
+        this.products = res.data.products;
+      })
+      .catch((err) => {
+        console.dir(err);
+      });
   },
 };
 </script>
