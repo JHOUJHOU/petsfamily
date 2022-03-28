@@ -65,7 +65,7 @@ export default {
         .then((res) => {
           const { token, expired } = res.data;
           document.cookie = `jhouToken=${token}; expires=${new Date(expired)}`;
-          this.$router.push('/admin/productsAdmin');
+          this.$router.push('/admin/products');
           alert('登入成功，轉換頁面中!');
         })
         .catch(() => {

@@ -54,7 +54,7 @@
         </div>
       </div>
       <div class="row align-items-center bg-success bg-opacity-25 text-end mb-7">
-        <div class="col-6 ">
+        <div class="col-md-6">
           <h3>浪浪認養認購</h3>
           <p>認養代替購買，給浪浪一個家</p>
           <router-link to="/love"
@@ -62,11 +62,11 @@
             <button type="button" class="btn btn-secondary">點我看更多</button>
           </router-link>
         </div>
-        <div class="col-6 adoptPet"></div>
+        <div class="col-md-6 adoptPet"></div>
       </div>
       <div class="row align-items-center bg-success bg-opacity-25">
-        <div class="col-6 service"></div>
-        <div class="col-6">
+        <div class="col-md-6 service"></div>
+        <div class="col-md-6">
           <h3>各種服務</h3>
           <p>拍照、住宿、訓練、認養、認購、派對、溜狗</p>
           <router-link to="/petServices"
@@ -76,25 +76,6 @@
         </div>
       </div>
     </div>
-<!-- 消費者分享 -->
-<div class="container-lg mb-lg-8 mb-6">
-  <div class="row">
-    <h2 class="text-center">消費者分享</h2>
-    <swiper
-      :slides-per-view="3"
-      :space-between="50"
-    >
-    <swiper-slide v-for="item in products" :key="item.id">
-      <div
-      style="height: 500px; background-positiion: center center; background-size: cover;"
-        :style="{
-          backgroundImage: `url(${item.imageUrl})`
-        }">
-      </div>
-    </swiper-slide>
-  </swiper>
-  </div>
-</div>
 <!-- 配送&付款說明 -->
 <div class="container-lg mb-lg-8 mb-6">
   <div class="row">
@@ -122,12 +103,42 @@
     </div>
   </div>
 </div>
-<!-- 熱銷商品 Top 3 -->
+<!-- 消費者分享 -->
 <div class="container-lg mb-lg-8 mb-6">
   <div class="row">
-    <h2 class="text-center">熱銷商品 TOP 3</h2>
+    <h2 class="text-center">消費者分享</h2>
+    <swiper
+      :slides-per-view="3"
+      :space-between="50"
+    >
+    <swiper-slide v-for="item in products" :key="item.id">
+      <div
+      style="height: 300px; background-positiion: center center; background-size: cover;"
+        :style="{
+          backgroundImage: `url(${item.imageUrl})`
+        }">
+      </div>
+    </swiper-slide>
+  </swiper>
   </div>
 </div>
+
+<!-- 熱銷商品 Top 3 -->
+<!-- <div class="container-lg mb-lg-8 mb-6">
+  <div class="row">
+    <h2 class="text-center">熱銷商品 TOP 3</h2>
+    <div class="col-4" v-for="top in products" :key="top.id">
+      <div class="card" style="width: 18rem;">
+        <img :src="top.imageUrl" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{ top.title }}</h5>
+          <p class="card-text">{{ top.description }}</p>
+          <a href="#" class="btn btn-primary">加入購物車</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
 <!-- 訂閱 Email -->
 <div class="bg-success bg-opacity-50 py-5">
   <div class="container-lg">
@@ -161,9 +172,6 @@
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from 'swiper/vue';
 
-// Import Swiper styles
-// import 'swiper/swiper.scss';
-
 export default {
   components: {
     Swiper,
@@ -174,16 +182,21 @@ export default {
       products: [],
     };
   },
+  methods: {
+    getProducts() {
+      // 取得遠端資源
+      this.$http.get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products`)
+        .then((res) => {
+          console.log(res);
+          this.products = res.data.products;
+        })
+        .catch((err) => {
+          console.dir(err);
+        });
+    },
+  },
   mounted() {
-    // 取得遠端資源
-    this.$http.get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products`)
-      .then((res) => {
-        console.log(res);
-        this.products = res.data.products;
-      })
-      .catch((err) => {
-        console.dir(err);
-      });
+    this.getProducts();
   },
 };
 </script>

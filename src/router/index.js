@@ -3,7 +3,6 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 const routes = [
   {
     path: '/',
-    name: 'home',
     component: () => import('../views/FrontView.vue'),
     children: [
       {
@@ -43,12 +42,16 @@ const routes = [
         component: () => import('../views/Front/SearchView.vue'),
       },
       {
-        path: 'contact', // 搜尋
+        path: 'contact', // 聯絡
         component: () => import('../views/Front/ContactView.vue'),
       },
       {
-        path: '/login', // 搜尋
+        path: 'login', // 登入
         component: () => import('../views/LoginView.vue'),
+      },
+      {
+        path: 'product/:id', // 單一產品頁面
+        component: () => import('../views/Front/ProductPageView.vue'),
       },
     ],
   },
@@ -57,7 +60,7 @@ const routes = [
     component: () => import('../views/DashboardView.vue'),
     children: [
       {
-        path: 'productsAdmin', // 商品管理
+        path: 'products', // 商品管理
         component: () => import('../views/Dashboard/ProductsAdminView.vue'),
       },
       {

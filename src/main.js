@@ -7,6 +7,8 @@ import { required, email, min } from '@vee-validate/rules';
 import { localize, setLocale } from '@vee-validate/i18n';
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 
+import 'bootstrap';
+
 // vee-axios
 import axios from 'axios';
 import VueAxios from 'vue-axios';
@@ -18,6 +20,7 @@ import 'vue-material-design-icons/styles.css';
 
 // bootstrap-icons-vue
 import { BootstrapIconsPlugin } from 'bootstrap-icons-vue';
+
 import App from './LayoutView.vue';
 import router from './router';
 

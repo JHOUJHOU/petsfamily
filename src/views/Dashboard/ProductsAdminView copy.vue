@@ -2,8 +2,8 @@
   <div class="container mt-9 mb-lg-8 mb-6">
     <div class="text-end mb-4">
       <button class="btn btn-secondary" type="button"
-        @click="openModal()" data-bs-target="productModal">
-          建立新的商品
+        data-bs-target="productModal" ref="productModal" @click="openModal()">
+        建立新的商品
       </button>
     </div>
     <table class="table table-striped table-hover">
@@ -53,14 +53,18 @@
         </tr>
       </tbody>
     </table>
-  </div>
 
-  <product-modal></product-modal>
+    <div id="productModal"
+      ref="productModal" class="modal fade" tabindex="-1" aria-labelledby="productModalLabel"
+      aria-hidden="true">
+      <product-modal
+      ></product-modal>
+    </div>
+  </div>
 </template>
 
 <script>
 import ProductModal from '@/components/Admin/ProductModal.vue';
-import Modal from 'bootstrap/js/dist/modal';
 
 export default {
   components: {
@@ -69,7 +73,7 @@ export default {
   data() {
     return {
       products: [],
-      openBsModal: {},
+      Modal: {},
     };
   },
   methods: {
@@ -86,12 +90,11 @@ export default {
         });
     },
     openModal() {
-      this.openBsModal.show();
+      this.$refs.ProductModal.openBsModal.show();
     },
   },
   mounted() {
     this.getProducts();
-    this.openBsModal = new Modal(this.$refs.productModal);
   },
 };
 </script>
