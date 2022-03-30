@@ -2,7 +2,7 @@
   <div class="container mt-9 mb-lg-8 mb-6">
     <div class="text-end mb-4">
       <button class="btn btn-secondary" type="button"
-        @click="openModal()" data-bs-target="productModal">
+        @click.prevent="openModal('isNew')" data-bs-target="productModal">
           建立新的商品
       </button>
     </div>
@@ -41,11 +41,11 @@
           <td class="text-center">
             <div class="btn-group">
               <button type="button" class="btn btn-primary btn-sm"
-              data-bs-target="productModal">
+              @click.prevent="openModal('edit',item)">
                 編輯
               </button>
               <button type="button" class="btn btn-danger btn-sm"
-              data-bs-target="delProductModal">
+              @click.prevent="openModal('delete',item)">
                 刪除
               </button>
             </div>
@@ -53,45 +53,73 @@
         </tr>
       </tbody>
     </table>
+    <pagination :pages="pagination" @get-product="getProducts"></pagination>
   </div>
-
-  <product-modal></product-modal>
+  <product-modal
+    :temp-product="tempProduct"
+    :is-new="isNew"
+    @get-products="getProducts"
+    ref="productModal"
+  ></product-modal>
+  <del-product-modal
+    :temp-product="tempProduct"
+    @get-products="getProducts"
+    ref="delProductModal"
+  ></del-product-modal>
 </template>
 
 <script>
-import ProductModal from '@/components/Admin/ProductModal.vue';
-import Modal from 'bootstrap/js/dist/modal';
+import productModal from '@/components/Admin/ProductModal.vue';
+import delProductModal from '@/components/Admin/DelModal.vue';
+import pagination from '@/components/Paginate.vue';
 
 export default {
   components: {
-    ProductModal,
+    productModal,
+    delProductModal,
+    pagination,
   },
   data() {
     return {
       products: [],
-      openBsModal: {},
+      tempProduct: {
+        imagesUrl: [],
+      },
+      isNew: false,
+      pagination: {},
     };
   },
   methods: {
-    getProducts() {
-      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/products`;
-
+    getProducts(page) {
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/products/?page=${page}`;
       this.$http.get(url)
         .then((res) => {
-          console.log(res);
           this.products = res.data.products;
+          this.pagination = res.data.pagination;
         })
         .catch((err) => {
           console.dir(err);
         });
     },
-    openModal() {
-      this.openBsModal.show();
+    openModal(status, product) {
+      if (status === 'isNew') {
+        this.tempProduct = {
+          imagesUrl: [],
+        };
+        this.$refs.productModal.openModal();
+        this.isNew = true;
+      } else if (status === 'edit') {
+        this.tempProduct = { ...product };
+        this.$refs.productModal.openModal();
+        this.isNew = false;
+      } else if (status === 'delete') {
+        this.tempProduct = { ...product };
+        this.$refs.delProductModal.openModal();
+      }
     },
   },
   mounted() {
     this.getProducts();
-    this.openBsModal = new Modal(this.$refs.productModal);
   },
 };
 </script>

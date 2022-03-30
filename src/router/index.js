@@ -65,7 +65,7 @@ const routes = [
       },
       {
         path: 'cartAdmin', // 訂單管理
-        component: () => import('../views/Dashboard/CartAdminView.vue'),
+        component: () => import('../views/Dashboard/OrderAdminView.vue'),
       },
       {
         path: 'knowledgeAdmin', // 文章管理

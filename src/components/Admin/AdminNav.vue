@@ -35,6 +35,9 @@
               <li class="nav-item">
                 <router-link to="/" class="nav-link">回前台首頁</router-link>
               </li>
+              <li class="nav-item">
+                <a href="#" @click.prevent="$emit('logout')" class="nav-link">登出</a>
+              </li>
             </ul>
           </div>
         </div>

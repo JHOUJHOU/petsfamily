@@ -1,5 +1,5 @@
 <template>
-  <AdminNav></AdminNav>
+  <AdminNav @logout="logout"></AdminNav>
   <router-view/>
   <AdminFooter></AdminFooter>
 </template>
@@ -25,7 +25,16 @@ export default {
       const url = `${process.env.VUE_APP_API}/api/user/check`;
       this.$http.post(url)
         .then(() => {
-          this.getProduct();
+        });
+    },
+    logout() {
+      const apiUrl = `${process.env.VUE_APP_API}/logout`;
+
+      this.$http.post(apiUrl)
+        .then((res) => {
+          if (res.data.success === true) {
+            this.$router.push('/login');
+          }
         })
         .catch((err) => {
           console.dir(err);
