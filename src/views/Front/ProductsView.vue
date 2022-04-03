@@ -6,7 +6,8 @@
         <div class="col-3">
           <div class="btn-group btn-group-vertical w-100"
           role="group" aria-label="Basic outlined example">
-            <button type="button" class="btn btn-secondary fw-bold">商品列表</button>
+            <button type="button" class="btn btn-secondary fw-bold"
+              @click="getProducts()">全部</button>
             <button type="button" class="btn btn-outline-primary text-dark fw-bold"
               @click="getProducts('狗')">狗狗</button>
             <button type="button" class="btn btn-outline-primary text-dark fw-bold"
@@ -33,7 +34,6 @@
                 <div class="card-body">
                   <div class="d-flex justify-content-between">
                     <h5 class="card-title">{{ item.title }}</h5>
-                    <span><BIconHeart/></span>
                   </div>
                   <p class="card-text">{{ item.description}}</p>
                   <div class="d-flex justify-content-end">
@@ -49,26 +49,29 @@
                     <router-link :to="`/product/${item.id}`"
                     class="btn btn-outline-primary text-dark"
                     >詳細資訊</router-link>
-                    <button @click.prevent="addToCart"
+                    <button type="button" @click.prevent="addToCart(item.id)"
                     class="btn btn-secondary ms-2"
-                    >加入購物車</button>
+                    :disabled="isLoadingItem === item.id"
+                    >
+                    加入購物車</button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <pagination :pages="pagination" @get-product="getProducts"></pagination>
       </div>
-
-      <pagination :pages="pagination" @get-pages="getPages"></pagination>
     </div>
   </div>
 </template>
 
 <script>
 import pagination from '@/components/Paginate.vue';
+import emitter from '@/assets/js/emitter';
 
 export default {
+  inject: ['emitter'],
   components: {
     pagination,
   },
@@ -76,25 +79,20 @@ export default {
     return {
       products: [],
       pagination: {},
-      id: '',
+      qty: 1,
+      cartData: {
+        carts: [],
+      },
+      isLoadingItem: '',
     };
   },
   methods: {
-    getProducts(category) {
-      let url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products`;
+    getProducts(category, page) {
+      let url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products?page=${page}`;
       if (category) {
-        url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products/?category=${category}`;
+        url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products/?category=${category}&page=${page}`;
       }
-      this.$http.get(url)
-        .then((res) => {
-          this.products = res.data.products;
-        })
-        .catch((err) => {
-          console.dir(err);
-        });
-    },
-    getPages(page = 1) {
-      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
+      // console.log(category, category.length, page);
       this.$http.get(url)
         .then((res) => {
           console.log(res);
@@ -105,25 +103,45 @@ export default {
           console.dir(err);
         });
     },
-    addToCart() {
-      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`;
-      const data = {
-        product_id: this.id,
-        qty: 1,
-      };
-      this.$http.post(url, { data })
+    getCart() {
+      const apiUrl = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`;
+      this.$http.get(apiUrl)
         .then((res) => {
-          alert('加入購物車成功');
           console.log(res);
+          this.cartData = res.data.data;
         })
         .catch((err) => {
-          alert('加入購物車失敗');
-          console.dir(err);
+          console.log(err);
+        });
+    },
+    addToCart(id, qty = 1) {
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`;
+      const data = {
+        product_id: id,
+        qty,
+      };
+      this.isLoadingItem = id;
+      this.$http.post(url, { data })
+        .then((res) => {
+          this.getCart();
+          this.isLoadingItem = '';
+          emitter.emit('get-cart');
+          if (res.data.success) {
+            this.emitter.emit('push-message', {
+              style: 'primary',
+              title: '加入購物車成功',
+            });
+          }
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '加入購物車失敗',
+          });
         });
     },
   },
   mounted() {
-    this.id = this.$route.params.id;
     this.getProducts();
   },
 };

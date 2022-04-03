@@ -79,4 +79,15 @@ ul,li,h1,h2,h3,h4,h5,h6,p,table,th,td,tr{
 body{
     overflow-x: hidden;
     font-family: 'Noto Sans TC', sans-serif;
+    position: relative;
+}
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+}
+.footer{
+    margin-top: auto;
+    height: 200px;
+    bottom: 0;
 }

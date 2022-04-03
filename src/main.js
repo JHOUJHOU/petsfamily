@@ -21,6 +21,10 @@ import 'vue-material-design-icons/styles.css';
 // bootstrap-icons-vue
 import { BootstrapIconsPlugin } from 'bootstrap-icons-vue';
 
+// vue-loading-overlay
+import VueLoading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
+
 import App from './LayoutView.vue';
 import router from './router';
 
@@ -49,6 +53,9 @@ app.component('search-icon', SearchWebIcon);
 
 // bootstrap-icons-vue component
 app.use(BootstrapIconsPlugin);
+
+// vue-loading-overlay
+app.use(VueLoading);
 
 app.use(router);
 app.mount('#app');

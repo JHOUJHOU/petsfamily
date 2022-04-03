@@ -1,30 +1,27 @@
 <template>
-  <div aria-live="polite" aria-atomic="true" class="position-relative">
-    <div class="toast-container position-absolute top-0 end-0 p-3">
-      <!-- Then put toasts within -->
-      <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-          <img src="..." class="rounded me-2" alt="...">
-          <strong class="me-auto">Bootstrap</strong>
-          <small class="text-muted">just now</small>
-          <button type="button"
-          class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-          See? Just like this.
-        </div>
+  <div class="toast-container position-fixed pe-3 top-10 end-0"
+    style="z-index: 1500"
+  >
+    <div
+      v-for="(msg , key) in messages"
+      :key="key"
+      class="toast show"
+      :class="`toast${key}`"
+      role="alert">
+      <div class="toast-header">
+        <span
+          :class="`bg-${msg.style}`"
+          class="p-2 rounded me-2 d-inline-block"
+        ></span>
+        <strong class="me-auto">{{ msg.title}}</strong>
+        <button
+          type="button"
+          class="btn-close"
+          @click="clearToast(key)"
+          aria-label="Close"></button>
       </div>
-      <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-          <img src="..." class="rounded me-2" alt="...">
-          <strong class="me-auto">Bootstrap</strong>
-          <small class="text-muted">2 seconds ago</small>
-          <button type="button"
-          class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-          Heads up, toasts will stack automatically
-        </div>
+      <div class="toast-body" v-if="msg.content">
+        {{ msg.content}}
       </div>
     </div>
   </div>
@@ -34,13 +31,26 @@
 export default {
   data() {
     return {
-
+      messages: [],
     };
   },
+  inject: ['emitter'],
   methods: {
-
+    toastShow() {
+      setTimeout(() => {
+        this.messages.shift();
+      }, 3000);
+    },
+    clearToast(index) {
+      this.messages.splice(index, 1);
+    },
   },
   mounted() {
+    this.emitter.on('push-message', (message) => {
+      const { style = 'success', title, content } = message;
+      this.messages.push({ style, title, content });
+      this.toastShow();
+    });
   },
 };
 </script>

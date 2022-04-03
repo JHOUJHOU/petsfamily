@@ -64,6 +64,7 @@ export default {
       this.$http.post(apiUrl, this.user)
         .then((res) => {
           const { token, expired } = res.data;
+          console.log(res.data);
           document.cookie = `jhouToken=${token}; expires=${new Date(expired)}`;
           this.$router.push('/admin/products');
           alert('登入成功，轉換頁面中!');

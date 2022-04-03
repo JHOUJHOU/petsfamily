@@ -23,14 +23,8 @@
                 <router-link to="/admin/cartAdmin" class="nav-link">訂單管理</router-link>
               </li>
               <li class="nav-item">
-                <router-link to="/admin/knowledgeAdmin" class="nav-link">文章管理</router-link>
-              </li>
-              <li class="nav-item">
                 <router-link to="/admin/DiscountAdmin" class="nav-link">優惠管理
                 </router-link>
-              </li>
-              <li class="nav-item">
-                <router-link to="/admin/serviceAdmin" class="nav-link">客服管理</router-link>
               </li>
               <li class="nav-item">
                 <router-link to="/" class="nav-link">回前台首頁</router-link>

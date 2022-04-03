@@ -6,24 +6,13 @@ const routes = [
     component: () => import('../views/FrontView.vue'),
     children: [
       {
-        path: 'home', // 首頁
+        path: '/', // 首頁
+        name: 'home',
         component: () => import('../views/Front/HomeView.vue'),
       },
       {
         path: 'products', // 產品列表
         component: () => import('../views/Front/ProductsView.vue'),
-      },
-      {
-        path: 'petServices', // 寵物服務
-        component: () => import('../views/Front/PetServicesView.vue'),
-      },
-      {
-        path: 'love', // 浪浪認養
-        component: () => import('../views/Front/LoveView.vue'),
-      },
-      {
-        path: 'knowledge', // 寵物知識
-        component: () => import('../views/Front/KnowledgeView.vue'),
       },
       {
         path: 'discount', // 優惠活動
@@ -38,8 +27,8 @@ const routes = [
         component: () => import('../views/Front/CartView.vue'),
       },
       {
-        path: 'search', // 搜尋
-        component: () => import('../views/Front/SearchView.vue'),
+        path: 'order', // 結帳頁面
+        component: () => import('../views/Front/CartOrderView.vue'),
       },
       {
         path: 'contact', // 聯絡
@@ -52,6 +41,10 @@ const routes = [
       {
         path: 'product/:id', // 單一產品頁面
         component: () => import('../views/Front/ProductPageView.vue'),
+      },
+      {
+        path: 'pay/:id', // 單一產品頁面
+        component: () => import('../views/Front/PayOrderView.vue'),
       },
     ],
   },
@@ -68,16 +61,8 @@ const routes = [
         component: () => import('../views/Dashboard/OrderAdminView.vue'),
       },
       {
-        path: 'knowledgeAdmin', // 文章管理
-        component: () => import('../views/Dashboard/KnowledgeAdminView.vue'),
-      },
-      {
         path: 'discountAdmin', // 優惠管理
         component: () => import('../views/Dashboard/DiscountAdminView.vue'),
-      },
-      {
-        path: 'serviceAdmin', // 客服管理
-        component: () => import('../views/Dashboard/ServiceAdminView.vue'),
       },
     ],
   },
