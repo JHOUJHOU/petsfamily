@@ -31,7 +31,7 @@
                 <router-link to="/question" class="nav-link">常見問題</router-link>
               </li>
             </ul>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav d-none d-md-block">
               <li class="nav-item">
                 <router-link to="/cart" class="nav-link position-relative"><BIconCartCheckFill/>
                 <span
