@@ -184,6 +184,13 @@ export default {
           });
         });
     },
+    toThousands(number) {
+      const arr = String(number).split('.');
+      const num = arr[0];
+      const len = Math.ceil(num.length / 3) * 3;
+      const result = num.padStart(len, '0').match(/\d{3}/g).join(',').replace(/^0+/, '');
+      return arr[1] ? `${result}.${arr[1]}` : result;
+    },
   },
   mounted() {
     this.getCart();

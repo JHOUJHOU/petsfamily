@@ -3,7 +3,7 @@
   <div class="mt-9 mb-lg-8 mb-6">
     <div class="container">
       <div class="row">
-        <div class="col-3">
+        <div class="col-lg-3 col-md-12 col-sm-12 mb-3">
           <div class="btn-group btn-group-vertical w-100"
           role="group" aria-label="Basic outlined example">
             <button type="button" class="btn btn-secondary fw-bold"
@@ -20,7 +20,7 @@
               @click="getProducts('拍攝')">拍攝</button>
           </div>
         </div>
-        <div class="col">
+        <div class="col-lg-9 col-md-12 col-sm-12">
           <div class="row row-cols-1 row-cols-md-3 g-4">
             <div class="col" v-for="item in products" :key="item.id">
               <div class="card border rounded rounded-3 mb-3
