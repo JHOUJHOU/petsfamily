@@ -177,7 +177,6 @@ export default {
       const order = this.form;
       this.$http.post(apiUrl, { data: order })
         .then((res) => {
-          console.log(res.data);
           if (res.data.success) {
             this.emitter.emit('push-message', {
               style: 'primary',

@@ -9,7 +9,7 @@
           本網站圖片與文案僅供個人作品使用，非商業用途
         </div>
         <div>
-          © Copyright 2022 寵物世家
+          寵愛© 2022 COPYRIGHT
         </div>
       </div>
   </footer>

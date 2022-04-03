@@ -23,10 +23,5 @@
 <script>
 export default {
   props: ['pages'],
-  methods: {
-    changePage(page) {
-      this.$emit('change-page', page);
-    },
-  },
 };
 </script>

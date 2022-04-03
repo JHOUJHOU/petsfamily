@@ -53,7 +53,7 @@
         </tr>
       </tbody>
     </table>
-    <pagination :pages="pagination" @get-product="getProducts"></pagination>
+    <pagination :pages="pagination" @change-page="getProducts"></pagination>
   </div>
   <product-modal
     :temp-product="tempProduct"

@@ -3,13 +3,13 @@
     <ul class="pagination">
       <li class="page-item" :class="{ disabled: !pages.has_pre}">
         <a class="page-link" href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
+        <span aria-hidden="true">&laquo;</span>
         </a>
       </li>
       <li class="page-item"
-        :class="{ active: page === pages.current_page}"
-        v-for="page in pages.total_pages" :key="page+page">
-        <a class="page-link" href="#" @click="$emit('get-product', page)">{{ page }}</a>
+        :class="{ active: page === pages.current_page }"
+        v-for="page in pages.total_pages" :key="page + 'page'">
+        <a class="page-link" href="#" @click.prevent="changePage(page)">{{ page }}</a>
       </li>
       <li class="page-item" :class="{ disabled: !pages.has_next}">
         <a class="page-link" href="#" aria-label="Next">
@@ -23,5 +23,10 @@
 <script>
 export default {
   props: ['pages'],
+  methods: {
+    changePage(page) {
+      this.$emit('change-page', page);
+    },
+  },
 };
 </script>

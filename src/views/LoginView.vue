@@ -50,6 +50,7 @@
 
 <script>
 export default {
+  inject: ['emitter'],
   data() {
     return {
       user: {
@@ -67,10 +68,18 @@ export default {
           console.log(res.data);
           document.cookie = `jhouToken=${token}; expires=${new Date(expired)}`;
           this.$router.push('/admin/products');
-          alert('登入成功，轉換頁面中!');
+          if (res.data.success) {
+            this.emitter.emit('push-message', {
+              style: 'primary',
+              title: '登入成功，轉換頁面中!',
+            });
+          }
         })
         .catch(() => {
-          alert('登入失敗，請確認輸入帳號或密碼正確性!');
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '登入失敗，請確認輸入帳號或密碼正確性!',
+          });
         });
     },
   },

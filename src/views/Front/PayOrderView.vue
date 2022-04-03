@@ -1,9 +1,12 @@
 <template>
   <div class="container mt-9 mb-lg-8 mb-6">
-    <p class="fs-1 fs-md-6 text-center mb-4 mb-md-4">結帳頁面</p>
+    <div>
+      <p v-if="order.is_paid" class="fs-1 fs-md-6 text-center mb-4 mb-md-4">訂單結帳完成頁面</p>
+      <p v-else class="fs-1 fs-md-6 text-center mb-4 mb-md-4">結帳頁面</p>
+    </div>
     <div class="row">
       <div class="col-12 col-md-6 col-lg-6">
-        <p class="fs-4 fs-md-6">訂單商品</p>
+        <p class="fs-4 fs-md-6">訂單明細</p>
         <table class="table table-striped">
           <thead>
             <tr>
@@ -13,7 +16,7 @@
               <th class="text-center">單項金額</th>
             </tr>
           </thead>
-          <tbody v-if="order.is_paid">
+          <tbody>
             <tr v-for="item in products" :key="item.id">
               <td class="text-start">
                 <div class="rounded rounded-3" style="height: 100px; width: 100px;
@@ -30,7 +33,7 @@
                 {{ item.qty }}
               </td>
               <td class="text-center">
-                {{ item.price }}
+                {{ item.product.price }}元
               </td>
             </tr>
           </tbody>
@@ -52,17 +55,57 @@
             </tr>
           </thead>
           <tbody>
-            <td class="align-middle">訂單金額</td>
-              <td>
-            </td>
+            <tr>
+              <td>訂單狀態</td>
+              <td v-if="order.is_paid" class="text-danger">已付款</td>
+              <td v-else>未付款</td>
+            </tr>
+            <tr>
+              <td>訂單總額</td>
+              <td>{{ order.total }}元</td>
+            </tr>
+            <tr>
+              <td>訂單編號</td>
+              <td>{{ order.id }}</td>
+            </tr>
+            <tr>
+              <td>收件人姓名</td>
+              <td>{{ user.name }}</td>
+            </tr>
+            <tr>
+              <td>收件人信箱</td>
+              <td>{{ user.email  }}</td>
+            </tr>
+            <tr>
+              <td>收件人信箱</td>
+              <td>{{ user.tel  }}</td>
+            </tr>
+            <tr>
+              <td>收件人地址</td>
+              <td>{{ user.address  }}</td>
+            </tr>
+            <tr>
+              <td>備註</td>
+              <td>{{ order.message }}</td>
+            </tr>
           </tbody>
         </table>
+        <div class="d-flx">
+          <div v-if="order.is_paid">
+          </div>
+          <div v-else>
+            <button @click="postPay" type="button" class="btn btn-primary w-50">現金</button>
+            <button @click="postPay" type="button" class="btn btn-secondary w-50">信用卡</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import emitter from '@/assets/js/emitter';
+
 export default {
   inject: ['emitter'],
   data() {
@@ -71,21 +114,42 @@ export default {
       user: {},
       products: {},
       is_paid: false,
+      orderId: '',
     };
   },
   methods: {
     getOrder() {
       this.orderId = this.$route.params.id;
-      const apiUrl = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/order/${this.order.id}`;
+      const apiUrl = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/order/${this.orderId}`;
       this.$http.get(apiUrl)
         .then((res) => {
-          console.log(res.data);
           this.order = res.data.order;
-          this.user = res.data.user;
-          this.products = res.data.products;
+          this.user = res.data.order.user;
+          this.products = res.data.order.products;
         })
         .catch((err) => {
           console.log(err);
+        });
+    },
+    postPay() {
+      this.orderId = this.$route.params.id;
+      const apiUrl = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/pay/${this.orderId}`;
+      this.$http.post(apiUrl)
+        .then((res) => {
+          this.getOrder();
+          emitter.emit('get-cart');
+          if (res.data.success) {
+            this.emitter.emit('push-message', {
+              style: 'primary',
+              title: '結帳成功',
+            });
+          }
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '結帳失敗',
+          });
         });
     },
   },

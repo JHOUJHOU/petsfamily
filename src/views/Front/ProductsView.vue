@@ -7,7 +7,7 @@
           <div class="btn-group btn-group-vertical w-100"
           role="group" aria-label="Basic outlined example">
             <button type="button" class="btn btn-secondary fw-bold"
-              @click="getProducts()">全部</button>
+              @click="getProducts('')">全部</button>
             <button type="button" class="btn btn-outline-primary text-dark fw-bold"
               @click="getProducts('狗')">狗狗</button>
             <button type="button" class="btn btn-outline-primary text-dark fw-bold"
@@ -59,8 +59,10 @@
               </div>
             </div>
           </div>
+          <pagination
+            :pages="pagination" @change-page="getProducts">
+          </pagination>
         </div>
-        <pagination :pages="pagination" @get-product="getProducts"></pagination>
       </div>
     </div>
   </div>
@@ -87,12 +89,12 @@ export default {
     };
   },
   methods: {
-    getProducts(category, page) {
+    getProducts(query, page = 1) {
       let url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products?page=${page}`;
-      if (category) {
-        url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products/?category=${category}&page=${page}`;
+
+      if (query) {
+        url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products?category=${query}&page=${page}`;
       }
-      // console.log(category, category.length, page);
       this.$http.get(url)
         .then((res) => {
           console.log(res);
