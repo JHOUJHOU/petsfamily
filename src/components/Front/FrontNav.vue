@@ -47,10 +47,10 @@
                 </span>
                 </router-link>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <router-link to="/contact" class="nav-link"><BIconTelephoneForwardFill/>
                 </router-link>
-              </li>
+              </li> -->
             </ul>
           </div>
         </div>
