@@ -31,9 +31,9 @@
   <div class="container-lg mb-lg-8 mb-6">
     <h2 class="text-center">服務介紹</h2>
     <p class="text-center mb-2">提供最好的品質 讓毛孩吃喝玩樂更佳安心</p>
-    <div class="row align-items-center bg-success bg-opacity-25 mb-7 text-md-start text-center">
+    <div class="row align-items-center bg-success bg-opacity-25 mb-7 text-md-start">
       <div class="col-md-6 col-12 product"></div>
-      <div class="col-md-6 col-12">
+      <div class="col-md-6 col-12 text-center py-3">
         <h3>優質商品</h3>
         <p>多樣選擇，讓您找到想要的商品</p>
         <router-link to="/products"
@@ -43,7 +43,7 @@
       </div>
     </div>
     <div class="row align-items-center bg-success bg-opacity-25 text-md-end text-center">
-      <div class="col-md-6 col-12">
+      <div class="col-md-6 col-12 text-center py-3">
         <h3>拍照</h3>
         <p>多種風格可挑選</p>
         <router-link to="/products"

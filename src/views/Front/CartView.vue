@@ -1,13 +1,13 @@
 <template>
   <div class="container mt-9 mb-lg-8 mb-6">
     <p class="fs-1 fs-md-6 text-center">購物車頁面</p>
-    <div class="text-end">
-      <button class="btn btn-outline-danger"
-      type="button" @click="removeAllCart"
-      :class="{'disabled':cartData.carts.length === 0 }">清空購物車</button>
-    </div>
     <div class="row">
-      <div class="col">
+      <div class="col-12">
+        <div class="text-end">
+          <button class="btn btn-outline-danger"
+          type="button" @click="removeAllCart"
+          :class="{'disabled':cartData.carts.length === 0 }">清空購物車</button>
+        </div>
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
@@ -75,7 +75,7 @@
         </table>
       </div>
     </div>
-    <div>
+    <div class="row">
       <ul class="d-flex justify-content-between">
         <li>
           <router-link class="btn btn-primary
