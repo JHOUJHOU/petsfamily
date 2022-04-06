@@ -8,10 +8,12 @@
         <div class="mb-2">
           寵愛© 2022 COPYRIGHT
         </div>
-        <div class="list-unstyled mb-3 d-flex align-items-center">
-          <div class="mx-3"><BIconGithub/></div>
-          <div class="mx-3"><BIconFacebook/></div>
-          <div class="mx-3"><BIconInstagram/></div>
+        <div class="d-flex justify-content-between align-items-center">
+          <a :href="`https://github.com/JHOUJHOU`" target="_blank" class="text-hidden github mx-2">github</a>
+          <a :href="`https://www.facebook.com/profile.php?id=100000339370233`" target="_blank" class="text-hidden meta mx-2">ig</a>
+          <a :href="`https://www.instagram.com/a01450887/`" target="_blank" class="text-hidden ig mx-2">ig</a>
+          <a href="mailto:a01450887@gmail.com" target="_blank" class="text-hidden
+            mail mx-2">mail</a>
           <router-link to="/login" class="link-dark bg-info
             rounded rounded-3 py-2 px-3"
             style="text-decoration:none"

@@ -7,8 +7,6 @@ import { required, email, min } from '@vee-validate/rules';
 import { localize, setLocale } from '@vee-validate/i18n';
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 
-import 'bootstrap';
-
 // vee-axios
 import axios from 'axios';
 import VueAxios from 'vue-axios';
@@ -19,6 +17,8 @@ import SearchWebIcon from 'vue-material-design-icons/SearchWeb.vue';
 import 'vue-material-design-icons/styles.css';
 
 // bootstrap-icons-vue
+import 'bootstrap';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import { BootstrapIconsPlugin } from 'bootstrap-icons-vue';
 
 // vue-loading-overlay
