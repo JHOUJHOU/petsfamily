@@ -25,6 +25,8 @@ import { BootstrapIconsPlugin } from 'bootstrap-icons-vue';
 import VueLoading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 
+import toThousands from './assets/js/filters';
+
 import App from './LayoutView.vue';
 import router from './router';
 
@@ -39,6 +41,9 @@ configure({
 setLocale('zh_TW');
 
 const app = createApp(App);
+app.config.globalProperties.$filters = {
+  toThousands,
+};
 
 // vee-validation component
 app.component('Form', Form);

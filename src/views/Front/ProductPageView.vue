@@ -22,12 +22,12 @@
           <div class="col-lg-12 mb-lg-5 mb-md-5 mb-5">
             <p class="fs-3"
               v-if="product.price === product.origin_price">
-              NT{{ product.price }}
+              NT{{ $filters.toThousands(product.price) }}
             </p>
             <div v-else class="col-lg-12 mmb-lg-5 mb-md-5 mb-5">
               <del class="fs-lg-1 text-success text-opacity-50 mb-3">
-              NT{{ product.origin_price }}</del>
-              <span>NT{{ product.price }}</span>
+              NT{{ $filters.toThousands(product.origin_price) }}</del>
+              <span>NT{{ $filters.toThousands(product.price) }}</span>
             </div>
           </div>
           <div class="col-lg-12 mb-lg-3 mb-md-3 mb-3">

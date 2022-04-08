@@ -33,7 +33,7 @@
                 {{ item.qty }}
               </td>
               <td class="text-center">
-                {{ item.product.price }}元
+                {{ $filters.toThousands(item.product.price) }}元
               </td>
             </tr>
           </tbody>
@@ -62,7 +62,7 @@
             </tr>
             <tr>
               <td>訂單總額</td>
-              <td>{{ order.total }}元</td>
+              <td>{{ $filters.toThousands(order.total) }}元</td>
             </tr>
             <tr>
               <td>訂單編號</td>

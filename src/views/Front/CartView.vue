@@ -61,7 +61,7 @@
                       {{ item.product.unit }}
                     </td>
                     <td class="text-center">
-                      {{ item.total }}
+                      {{ $filters.toThousands(item.total) }}
                     </td>
                   </tr>
                 </template>
@@ -69,7 +69,7 @@
             <tfoot>
                 <tr class="text-end">
                     <td colspan="5" class="text-end">總計</td>
-                    <td class="text-center">{{ cartData.total }}</td>
+                    <td class="text-center">{{ $filters.toThousands(cartData.total) }}</td>
                 </tr>
             </tfoot>
         </table>

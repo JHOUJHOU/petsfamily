@@ -48,11 +48,12 @@
                   <p class="card-text">{{ item.description}}</p>
                   <div class="d-flex justify-content-end">
                     <p class="card-text d-flex justify-content-end"
-                      v-if="item.price === item.origin_price">NT{{ item.price }}</p>
+                      v-if="item.price === item.origin_price">
+                      NT{{ $filters.toThousands(item.price) }}</p>
                     <div v-else>
                       <del class="fs-6 text-success text-opacity-50">
-                        NT{{ item.origin_price }}</del>
-                        <span>NT{{ item.price }}</span>
+                        NT{{ $filters.toThousands(item.origin_price) }}</del>
+                        <span>NT{{ $filters.toThousands(item.price) }}</span>
                     </div>
                   </div>
                   <div class="d-flex justify-content-end">

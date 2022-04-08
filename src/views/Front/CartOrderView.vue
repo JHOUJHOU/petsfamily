@@ -30,14 +30,14 @@
                 {{ item.qty }}
               </td>
               <td class="text-center">
-                {{ item.total }}
+                {{ $filters.toThousands(item.total) }}
               </td>
             </tr>
           </tbody>
           <tfoot>
             <tr>
               <td colspan="4" class="text-end py-5 pe-5">
-                總計 {{ cartData.total }} 元
+                總計 {{ $filters.toThousands(cartData.total) }} 元
               </td>
             </tr>
           </tfoot>
