@@ -1,5 +1,5 @@
 <template>
-  <header class="bg-primary">
+  <header class="bg-primary sticky-top">
     <div class="container-lg">
       <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">

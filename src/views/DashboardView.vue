@@ -33,11 +33,9 @@ export default {
       this.$http.post(apiUrl)
         .then((res) => {
           if (res.data.success === true) {
+            document.cookie = 'hexToken=;expires=;';
             this.$router.push('/login');
           }
-        })
-        .catch((err) => {
-          console.dir(err);
         });
     },
   },

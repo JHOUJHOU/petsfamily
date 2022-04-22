@@ -9,9 +9,9 @@
           寵愛© 2022 COPYRIGHT
         </div>
         <div class="d-flex justify-content-between align-items-center">
-          <a :href="`https://github.com/JHOUJHOU`" target="_blank" class="text-hidden github mx-2">github</a>
-          <a :href="`https://www.facebook.com/profile.php?id=100000339370233`" target="_blank" class="text-hidden meta mx-2">ig</a>
-          <a :href="`https://www.instagram.com/a01450887/`" target="_blank" class="text-hidden ig mx-2">ig</a>
+          <a href="`https://github.com/JHOUJHOU`" target="_blank" class="text-hidden github mx-2">github</a>
+          <a href="`https://www.facebook.com/profile.php?id=100000339370233`" target="_blank" class="text-hidden meta mx-2">ig</a>
+          <a href="`https://www.instagram.com/a01450887/`" target="_blank" class="text-hidden ig mx-2">ig</a>
           <a href="mailto:a01450887@gmail.com" target="_blank" class="text-hidden
             mail mx-2">mail</a>
           <router-link to="/login" class="link-dark bg-info

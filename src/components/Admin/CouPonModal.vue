@@ -1,12 +1,14 @@
 <template>
+  <loading :active="isLoading" class="fs-1 text-secondary"><dog-side-icon/>
+  <dog-side-icon/><dog-side-icon/></loading>
   <div id="couponModal" ref="couponModal"
     class="modal fade" tabindex="-1" aria-labelledby="couponModalLabel"
     aria-hidden="true">
-      <div class="modal-dialog modal-xl">
+      <div class="modal-dialog modal-md">
           <div class="modal-content border-0">
             <div class="modal-header bg-dark text-white">
               <h5 id="couponModalLabel" class="modal-title">
-              <span>新增優惠卷</span>
+              <span>優惠卷</span>
               </h5>
               <button type="button" class="btn-close"
                 data-bs-dismiss="modal" aria-label="Close"></button>
@@ -30,7 +32,7 @@
                     <label for="percent" class="form-label">折扣百分比</label>
                       <input id="percent" type="text"
                         class="form-control" placeholder="請輸入折扣百分比"
-                        v-model="coupon.percent">
+                        v-model.number="coupon.percent">
                   </div>
                   <div class="mb-3">
                     <label for="code" class="form-label">優惠卷折扣碼</label>
@@ -68,21 +70,25 @@ import Modal from 'bootstrap/js/dist/modal';
 
 export default {
   props: ['tempCoupon', 'isNew'],
+  inject: ['emitter'],
   data() {
     return {
-      coupon: {},
+      coupon: {
+        is_enabled: 0,
+      },
       openBsModal: {},
       due_date: '',
+      isLoading: false,
     };
   },
   watch: {
     tempCoupon() {
       this.coupon = this.tempCoupon;
       const dateAndTime = new Date(this.coupon.due_date * 1000).toISOString().split('T');
-      [this.coupon.due_date] = dateAndTime;
+      [this.due_date] = dateAndTime;
     },
     due_date() {
-      this.coupon.due_date = Math.floor(new Date(this.tempCoupon.due_date) / 1000);
+      this.coupon.due_date = Math.floor(new Date(this.due_date) / 1000);
     },
   },
   methods: {
@@ -97,17 +103,30 @@ export default {
       let method = 'post';
 
       if (!this.isNew) {
-        apiUrl = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`;
+        apiUrl = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/coupon/${this.coupon.id}`;
         method = 'put';
       }
-      this.$http[method](apiUrl, { data: this.tempCoupon })
+      this.isLoading = true;
+      this.$http[method](apiUrl, { data: this.coupon })
         .then((res) => {
-          console.log(res.data, this.tempCoupon);
+          console.log(res.data);
           this.$emit('get-coupon');
+          setTimeout(() => {
+            this.isLoading = false;
+          }, 1000);
           this.openBsModal.hide();
+          if (res.data.success) {
+            this.emitter.emit('push-message', {
+              style: 'primary',
+              title: '更新優惠卷成功',
+            });
+          }
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '新增或編輯優惠卷失敗',
+          });
         });
     },
   },

@@ -2,7 +2,7 @@
   <div class="container mt-9 mb-lg-8 mb-6">
     <div class="text-end mb-4">
       <button class="btn btn-secondary" type="button"
-        @click.prevent="openModal('isNew')" data-bs-target="productModal">
+        @click.prevent="openModal('isNew')">
           建立新的商品
       </button>
     </div>
@@ -71,7 +71,7 @@
 <script>
 import productModal from '@/components/Admin/ProductModal.vue';
 import delProductModal from '@/components/Admin/DelModal.vue';
-import pagination from '@/components/Paginate.vue';
+import pagination from '@/components/Pagination.vue';
 
 export default {
   components: {
@@ -96,9 +96,6 @@ export default {
         .then((res) => {
           this.products = res.data.products;
           this.pagination = res.data.pagination;
-        })
-        .catch((err) => {
-          console.dir(err);
         });
     },
     openModal(status, product) {

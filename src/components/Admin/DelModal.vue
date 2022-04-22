@@ -49,9 +49,6 @@ export default {
         .then(() => {
           this.$emit('get-products');
           this.openBsModal.hide();
-        })
-        .catch((err) => {
-          console.dir(err);
         });
     },
   },

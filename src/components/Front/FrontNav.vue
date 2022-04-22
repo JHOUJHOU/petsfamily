@@ -1,5 +1,5 @@
 <template>
-  <header class="bg-primary">
+  <header class="bg-primary sticky-top">
     <div class="container-lg">
       <nav class="navbar navbar-expand-lg navbar-light bg-primary">
         <div class="container-fluid">
@@ -25,7 +25,7 @@
                 <router-link to="/cart"
                   class="nav-link position-relative">
                   <BIconCartCheckFill/>
-                    <span
+                    <span v-if="cartData?.carts?.length != 0"
                       class="position-absolute
                         top-30
                         start-90
@@ -93,9 +93,6 @@ export default {
       this.$http.get(apiUrl)
         .then((res) => {
           this.cartData = res.data.data;
-        })
-        .catch((err) => {
-          console.log(err);
         });
     },
   },

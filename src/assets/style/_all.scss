@@ -1,11 +1,8 @@
-@import "../../../node_modules/bootstrap/scss/functions";
+@import "bootstrap/scss/functions";
 @import "./helpers/variables";
-@import "../../../node_modules/bootstrap/scss/variables";
 @import "./helpers/utilities";
-@import "../../../node_modules/bootstrap/scss/bootstrap";
-@import '../../../node_modules/swiper/swiper.scss';
+@import "swiper/scss";
 
 @import './helpers/base.scss';
 @import './helpers/background.scss';
-@import './helpers/pages.scss';
 

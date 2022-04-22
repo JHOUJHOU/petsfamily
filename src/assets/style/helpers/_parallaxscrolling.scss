@@ -1,0 +1,30 @@
+/* The animation code */
+@keyframes example {
+  0%   {background-color:#712E1E; left:0px; top:0px;}
+  25%  {background-color:#888870; left:200px; top:0px;}
+  50%  {background-color:#712E1E; left:200px; top:200px;}
+  75%  {background-color:#888870; left:0px; top:200px;}
+  100% {background-color:#712E1E; left:0px; top:50px;}
+}
+
+/* The element to apply the animation to */
+loading {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  background-color: red;
+  animation-name: example;
+  animation-duration: 4s;
+/*  晚幾秒發動  */
+  animation-delay: 2s; 
+/*  要重複跑幾次，或者是用 infinite 一直持續跑   */
+/*   animation-iteration-count: infinite; * /
+  
+/*  停留在哪個影格  forwards、backwards、both */
+/*   animation-fill-mode: backwards; */
+/* 
+  forwards 停留在最後一個位置   
+  backwards: 留在第一個位置
+  both 擁有前兩者功能
+  */
+}

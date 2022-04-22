@@ -1,15 +1,17 @@
 <template>
+  <loading :active="isLoading" class="fs-1 text-secondary"><dog-side-icon/>
+  <dog-side-icon/><dog-side-icon/></loading>
   <div class="vh-100">
     <div class="container">
       <div class="row justify-content-center">
         <h1 class="text-center">管理端登入</h1>
         <div class="col-lg-4 py-3 border rounded rounded-5">
-          <Form v-slot="{ errors }">
+          <Form v-slot="{ errors }" @submit="login">
             <div class="mb-3">
               <label for="email" class="form-label">帳號</label>
               <Field
                 id="username"
-                name="帳號"
+                name="email"
                 type="text"
                 class="form-control"
                 v-model="user.username"
@@ -18,14 +20,14 @@
                 rules="email|required"
               >
               </Field>
-              <error-message name="email" class="invalid-feedback"></error-message>
+              <ErrorMessage name="email" class="invalid-feedback"></ErrorMessage>
             </div>
 
             <div class="mb-3">
               <label for="name" class="form-label">密碼</label>
               <Field
                 id="password"
-                name="密碼"
+                name="password"
                 type="password"
                 placeholder="請輸入密碼"
                 rules="required"
@@ -34,10 +36,10 @@
                 :class="{ 'is-invalid': errors['帳號或密碼錯誤'] }"
               >
               </Field>
-              <error-message name="姓名" class="invalid-feedback"></error-message>
+              <ErrorMessage name="password" class="invalid-feedback"></ErrorMessage>
             </div>
 
-            <button class="btn btn-lg btn-primary w-100 mt-3 mb-3" type="button" @click="login">
+            <button class="btn btn-lg btn-primary w-100 mt-3 mb-3" type="submit">
               登入
             </button>
           </Form>
@@ -57,15 +59,19 @@ export default {
         username: '',
         password: '',
       },
+      isLoading: false,
     };
   },
   methods: {
     login() {
       const apiUrl = `${process.env.VUE_APP_API}/admin/signin`;
+      this.isLoading = true;
       this.$http.post(apiUrl, this.user)
         .then((res) => {
+          setTimeout(() => {
+            this.isLoading = false;
+          }, 1000);
           const { token, expired } = res.data;
-          console.log(res.data);
           document.cookie = `jhouToken=${token}; expires=${new Date(expired)}`;
           this.$router.push('/admin/products');
           if (res.data.success) {

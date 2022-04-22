@@ -130,13 +130,9 @@ export default {
       const apiUrl = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/order/${this.tempOrder.id}`;
 
       this.$http.put(apiUrl, { data: this.tempOrder })
-        .then((res) => {
-          console.log(res);
+        .then(() => {
           this.$emit('update-order');
           this.bsModal.hide();
-        })
-        .catch((err) => {
-          console.log(err);
         });
     },
   },

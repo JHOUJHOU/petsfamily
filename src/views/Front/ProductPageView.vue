@@ -1,7 +1,9 @@
 <template>
+  <loading :active="isLoading" class="fs-1 text-secondary"><dog-side-icon/>
+  <dog-side-icon/><dog-side-icon/></loading>
   <div class="container mt-9 mb-lg-8 mb-6">
     <div class="row">
-      <div class="col-lg-6 col-sm-12 col-12 mb-lg-3 mb-md-3 mb-3">
+      <div class="col-lg-6 col-sm-12 col-12 mb-lg-3 mb-md-3 mb-3" data-aos="fade-right">
         <div class="rounded rounded-3 img-fluid" style="height: 500px;
           background-position: center center; background-size: cover;"
           :style="{
@@ -10,7 +12,7 @@
         >
         </div>
       </div>
-      <div class="col-lg-6 col-sm-12 col-12">
+      <div class="col-lg-6 col-sm-12 col-12" data-aos="fade-left">
         <div class="row">
           <div class="col-lg-12 mb-lg-5 mb-md-5 mb-5">
             <h5 class="mb-3 fs-2">{{ product.title }}</h5>
@@ -55,6 +57,18 @@
       </div>
     </div>
   </div>
+  <div class="container-lg mb-lg-10 mb-6"  data-aos="fade-up">
+    <div class="row">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Active</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -70,18 +84,19 @@ export default {
       cartData: {
         carts: [],
       },
+      isLoading: false,
     };
   },
   methods: {
     getProduct() {
       const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/product/${this.id}`;
+      this.isLoading = true;
       this.$http.get(url)
         .then((res) => {
-          console.log(res);
+          setTimeout(() => {
+            this.isLoading = false;
+          }, 1000);
           this.product = res.data.product;
-        })
-        .catch((err) => {
-          console.dir(err);
         });
     },
     addToCart(id, qty) {
@@ -93,7 +108,6 @@ export default {
       this.isLoadingItem = id;
       this.$http.post(url, { data })
         .then((res) => {
-          console.log(res);
           emitter.emit('get-cart');
           this.isLoadingItem = '';
           if (res.data.success) {

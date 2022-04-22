@@ -1,4 +1,6 @@
 <template>
+  <loading :active="isLoading" class="fs-1 text-secondary"><dog-side-icon/>
+  <dog-side-icon/><dog-side-icon/></loading>
   <div class="container mt-9 mb-lg-8 mb-6">
     <div>
       <p v-if="order.is_paid" class="fs-1 fs-md-6 text-center mb-4 mb-md-4">訂單結帳完成頁面</p>
@@ -7,7 +9,7 @@
     <div class="row">
       <div class="col-12 col-md-6 col-lg-6">
         <p class="fs-4 fs-md-6">訂單明細</p>
-        <table class="table table-striped">
+        <table class="table table-striped align-middle">
           <thead>
             <tr>
               <th class="text-start">商品照片</th>
@@ -40,7 +42,7 @@
           <tfoot>
             <tr>
               <td colspan="4" class="text-end py-5 pe-5">
-                總計 {{ order.total }} 元
+                總計 {{ $filters.toThousands(order.total) }} 元
               </td>
             </tr>
           </tfoot>
@@ -48,7 +50,7 @@
       </div>
       <div class="col-12 col-md-6 col-lg-6">
         <p class="fs-4 fs-md-6">訂單資訊</p>
-        <table class="table table-striped">
+        <table class="table table-striped align-middle">
           <thead>
             <tr>
               <th class="text-start"></th>
@@ -90,12 +92,19 @@
             </tr>
           </tbody>
         </table>
-        <div class="d-flx">
+        <div>
           <div v-if="order.is_paid">
           </div>
-          <div v-else>
-            <button @click="postPay" type="button" class="btn btn-primary w-50">現金</button>
-            <button @click="postPay" type="button" class="btn btn-secondary w-50">信用卡</button>
+          <div v-else class="row">
+            <div class="col-4">
+              <p class="fs-4 fs-md-6 text-center">付款方式</p>
+            </div>
+            <div class="col-4">
+              <button @click="postPay" type="button" class="btn btn-primary w-100">現金</button>
+            </div>
+            <div class="col-4">
+              <button @click="postPay" type="button" class="btn btn-secondary w-100">信用卡</button>
+            </div>
           </div>
         </div>
       </div>
@@ -115,27 +124,33 @@ export default {
       products: {},
       is_paid: false,
       orderId: '',
+      isLoading: false,
     };
   },
   methods: {
     getOrder() {
       this.orderId = this.$route.params.id;
       const apiUrl = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/order/${this.orderId}`;
+      this.isLoading = true;
       this.$http.get(apiUrl)
         .then((res) => {
+          setTimeout(() => {
+            this.isLoading = false;
+          }, 1000);
           this.order = res.data.order;
           this.user = res.data.order.user;
           this.products = res.data.order.products;
-        })
-        .catch((err) => {
-          console.log(err);
         });
     },
     postPay() {
       this.orderId = this.$route.params.id;
       const apiUrl = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/pay/${this.orderId}`;
+      this.isLoading = true;
       this.$http.post(apiUrl)
         .then((res) => {
+          setTimeout(() => {
+            this.isLoading = false;
+          }, 1000);
           this.getOrder();
           emitter.emit('get-cart');
           if (res.data.success) {

@@ -15,7 +15,8 @@
         <tr v-for="item in orders" :key="item.id">
           <td>
             <button type="button" class="btn btn-outline-danger"
-            data-bs-toggle="modal" data-bs-target="#exampleModal" @click="delOrderModal(item)">
+              data-bs-target="#exampleModal"
+              @click="delOrderModal(item)">
               X
             </button>
           </td>
@@ -89,9 +90,6 @@ export default {
         .then((res) => {
           this.orders = res.data.orders;
           this.pagination = res.data.pagination;
-        })
-        .catch((err) => {
-          console.log(err);
         });
     },
     orderModal(order) {

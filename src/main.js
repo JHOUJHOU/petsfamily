@@ -22,13 +22,21 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { BootstrapIconsPlugin } from 'bootstrap-icons-vue';
 
 // vue-loading-overlay
-import VueLoading from 'vue-loading-overlay';
+import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 
-import toThousands from './assets/js/filters';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+import toThousands from './assets/js/toThousands';
 
 import App from './LayoutView.vue';
 import router from './router';
+
+// eslint-disable-next-line no-unused-vars
+router.afterEach((to, from, next) => {
+  window.scrollTo(0, 0);
+});
 
 // vee-validation rules 啟用 locale
 defineRule('required', required);
@@ -41,6 +49,15 @@ configure({
 setLocale('zh_TW');
 
 const app = createApp(App);
+
+AOS.init({
+  disable: false,
+  offset: 120,
+  startEvent: 'DOMContentLoaded',
+  duration: 800,
+  once: true,
+});
+
 app.config.globalProperties.$filters = {
   toThousands,
 };
@@ -60,7 +77,7 @@ app.component('search-icon', SearchWebIcon);
 app.use(BootstrapIconsPlugin);
 
 // vue-loading-overlay
-app.use(VueLoading);
+app.component('Loading', Loading);
 
 app.use(router);
 app.mount('#app');

@@ -22,6 +22,11 @@
   background-position: center center;
   height: 300px;
 }
+.subscription{
+  background: url("https://images.unsplash.com/photo-1621752779053-b045006fe2e7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTc0fHxjYXR8ZW58MHwwfDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60") no-repeat;
+  background-size: cover;
+  background-position: right center;
+}
 .github{
   background: url("/src/assets/image/github.svg") no-repeat;
   background-size: cover;
