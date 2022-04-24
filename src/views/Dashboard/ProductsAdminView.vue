@@ -23,7 +23,8 @@
       <tbody>
         <tr v-for="item in products" :key="item.id">
           <td style="width: 200px">
-            <div :style="
+            <div
+              :style="
               { backgroundImage: `url(${item.imageUrl})`}"
               style="height: 100px; background-size: cover; background-position: center">
             </div>
@@ -94,6 +95,7 @@ export default {
       const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/products/?page=${page}`;
       this.$http.get(url)
         .then((res) => {
+          console.log(res.data.products);
           this.products = res.data.products;
           this.pagination = res.data.pagination;
         });

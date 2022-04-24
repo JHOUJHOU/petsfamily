@@ -106,9 +106,26 @@
         </div>
     </div>
   </div>
+
+<div class="container-lg mb-lg-8 mb-6">
+  <div class="row">
+    <h2 class="text-center">熱銷商品 TOP 3</h2>
+    <div class="col-4" v-for="top in products" :key="top.id">
+      <div class="card" style="width: 18rem;">
+        <img :src="top.imageUrl" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{ top.title }}</h5>
+          <p class="card-text">{{ top.description }}</p>
+          <a href="#" class="btn btn-primary">加入購物車</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </template>
 
 <script>
+
 export default {
   data() {
     return {

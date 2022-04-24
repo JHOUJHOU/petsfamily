@@ -57,27 +57,33 @@
       </div>
     </div>
   </div>
-  <div class="container-lg mb-lg-10 mb-6"  data-aos="fade-up">
+
+  <!-- <div class="container-lg mb-lg-8 mb-6">
     <div class="row">
-      <ul class="nav nav-tabs">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Active</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-      </ul>
+      <h2 class="text-center">更多商品</h2>
+      <div class="col-4" v-for="top in products" :key="top.id">
+        <div class="card" style="width: 18rem;">
+          <img :src="top.imageUrl" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{ top.title }}</h5>
+            <p class="card-text">{{ top.description }}</p>
+            <a href="#" class="btn btn-primary">加入購物車</a>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script>
 import emitter from '@/assets/js/emitter';
 
 export default {
+
   inject: ['emitter'],
   data() {
     return {
+      products: [],
       product: [],
       qty: 1,
       isLoadingItem: '',
@@ -88,6 +94,13 @@ export default {
     };
   },
   methods: {
+    getProducts() {
+      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products`;
+      this.$http.get(url)
+        .then((res) => {
+          this.products = res.data.products;
+        });
+    },
     getProduct() {
       const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/product/${this.id}`;
       this.isLoading = true;
@@ -127,6 +140,7 @@ export default {
   },
   mounted() {
     this.id = this.$route.params.id;
+    this.getProducts();
     this.getProduct();
   },
 };

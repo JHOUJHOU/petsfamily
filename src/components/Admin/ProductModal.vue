@@ -15,36 +15,58 @@
               <div class="row">
                 <div class="col-sm-4">
                   <div class="mb-3">
-                    <label for="imageUrl" class="form-label">輸入主圖網址</label>
-                    <input type="text" class="form-control" id="imageUrl"
-                    placeholder="請輸入主圖連結"
-                    v-model="product.imageUrl">
-                    <img class="img-fluid mb-3" :src="product.imageUrl" alt="">
-                    <!-- 還沒完成 -->
-                    <div class="input-group mb-3">
-                      <input type="file"
-                        class="form-control"
-                        id="inputGroupFile04"
-                        aria-describedby="inputGroupFileAddon04"
-                        aria-label="Upload">
+                    <div class=" mb-3">
+                      <label for="imageUrl" class="form-label">上傳主圖(擇一)</label>
+                      <input type="file" class="form-control" id="imageUrl"
+                      placeholder="請上傳主圖"
+                      ref="clearImage"
+                      @change="upload('mainImage', $event)">
                     </div>
+
+                    <div class="mb-3">
+                      <p>輸入主圖網址(擇一)</p>
+                      <input type="text"
+                        class="form-control"
+                        id="imageUrl"
+                        aria-describedby="inputGroupFileAddon04"
+                        aria-label="Upload"
+                        placeholder="輸入主圖網址(擇一)"
+                        v-if="!product.imageUrl"
+                        v-model="product.imageUrl">
+                    </div>
+                    <img class="img-fluid mb-3" :src="product.imageUrl" alt="">
+
+                    <button type="button"
+                    class="btn btn-secondary w-100"
+                    @click="product.imageUrl = ''">
+                      刪除主圖
+                    </button>
                   </div>
                   <div class="mb-3">
-                    <h3>多圖上傳</h3>
+                    <h3>增加其他商品圖片</h3>
                     <div v-if="Array.isArray(product.imagesUrl)">
                       <div v-for="(img , key) in product.imagesUrl"
                           :key="key + '123456'">
-                        <label for="imageUrl" class="form-label">輸入圖片網址</label>
-                        <input type="text" class="form-control mb-3"
-                          v-model="product.imagesUrl[key]"
-                          placeholder="請輸入圖片連結">
-                          <div class="input-group mb-3">
-                            <input type="file"
-                              class="form-control"
-                              id="inputGroupFile04"
-                              aria-describedby="inputGroupFileAddon04"
-                              aria-label="Upload">
+                          <div class=" mb-3">
+                            <label for="imageUrl" class="form-label">上傳商品圖片(擇一)</label>
+                            <input type="file" class="form-control" id="imageUrl"
+                            placeholder="上傳商品圖片"
+                            ref="clearImage"
+                            @change="upload('subImage', $event)">
                           </div>
+
+                          <div class="mb-3">
+                            <p>輸入商品圖片網址(擇一)</p>
+                            <input type="text"
+                              class="form-control"
+                              id="imageUrl"
+                              aria-describedby="inputGroupFileAddon04"
+                              placeholder="輸入商品圖片網址(擇一)"
+                              aria-label="Upload"
+                              v-model="product.imagesUrl[key]">
+                          </div>
+                          <img class="img-fluid mb-3"
+                          :src="product.imagesUrl[key]" alt="">
                       </div>
                         <button v-if="!product.imagesUrl.length ||
                         product.imagesUrl[product.imagesUrl.length - 1]"
@@ -110,7 +132,8 @@
                     <label for="content" class="form-label">說明內容</label>
                     <textarea id="description" type="text"
                       class="form-control"
-                      placeholder="請輸入說明內容" v-model="product.content">
+                      placeholder="請輸入說明內容"
+                      v-model="product.content">
                     </textarea>
                   </div>
                   <div class="mb-3">
@@ -171,9 +194,46 @@ export default {
         method = 'put';
       }
       this.$http[method](apiUrl, { data: this.tempProduct })
-        .then(() => {
+        .then((res) => {
           this.$emit('get-products');
+          if (res.data.success) {
+            this.emitter.emit('push-message', {
+              style: 'primary',
+              title: '新增或編輯產品成功',
+            });
+          }
           this.openBsModal.hide();
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '新增或編輯產品失敗',
+          });
+        });
+    },
+    upload(Image, e) {
+      const file = e.target.files[0];
+      const formData = new FormData();
+      formData.append('file-to-upload', file);
+      const apiUrl = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/upload`;
+      this.$http.post(apiUrl, formData)
+        .then((res) => {
+          if (Image === 'mainImage') {
+            this.product.imageUrl = res.data.imageUrl;
+            this.$refs.clearImage.value = '';
+          } else if (Image === 'subImage'
+            && !Array.isArray(this.product.imageUrl)) {
+            this.product.imagesUrl = [];
+            this.product.imagesUrl.push(res.data.imageUrl);
+            this.$refs.clearImage.value = '';
+          }
+          console.log(res.data.imagesUrl);
+          if (res.data.success) {
+            this.emitter.emit('push-message', {
+              style: 'primary',
+              title: '上傳主圖成功',
+            });
+          }
         })
         .catch(() => {
           this.emitter.emit('push-message', {

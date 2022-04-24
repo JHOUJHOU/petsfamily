@@ -23,7 +23,7 @@
     "google-fonts-webpack-plugin": "^0.4.4",
     "material-icons": "^1.10.8",
     "mitt": "^3.0.0",
-    "swiper": "^8.0.7",
+    "swiper": "^8.1.4",
     "vee-validate": "^4.5.10",
     "vue": "^3.2.13",
     "vue-aos": "^2.3.0",
