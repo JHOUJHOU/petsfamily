@@ -34,7 +34,7 @@
           </div>
           <div class="col-lg-12 mb-lg-3 mb-md-3 mb-3">
             <div class="input-group input-group-sm mb-3 d-flex">
-              <div class="input-group mb-3">
+              <div class="input-group mb-3  w-50">
                 <select
                   class="form-select"
                   v-model="qty">
