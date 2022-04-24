@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkpetsfamily_vue"]=self["webpackChunkpetsfamily_vue"]||[]).push([[227],{227:function(e,n,t){t.r(n),t.d(n,{default:function(){return i}});var r=t(6252);const s={class:"text-center"};function u(e,n){return(0,r.wg)(),(0,r.iD)("h1",s,"coming soon...")}var c=t(3744);const a={},f=(0,c.Z)(a,[["render",u]]);var i=f}}]);
+//# sourceMappingURL=227.d90a3fa6.js.map
